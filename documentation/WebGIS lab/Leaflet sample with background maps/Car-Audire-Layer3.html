@@ -1,0 +1,77 @@
+<html>
+<head>
+ <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+   integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+   crossorigin=""/>
+ <!-- Make sure you put this AFTER Leaflet's CSS -->
+  <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+   integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+   crossorigin=""></script>
+  <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Promise"></script>
+  <script src="leaflet-bing-layer.js"></script>    
+<meta name="GENERATOR" content="HTML Portable Editor">
+<title>CAR-AUDIRE</title>
+</head>
+<body bgcolor="green" text="black" link="blue" vlink="gray" alink="red" style="font-family: verdana; font-size: 9pt">
+<div id="intro">Welcome to CAR-AUDIRE</div>
+<div id="mapid" style="width: 800px; height: 600px; position: relative; outline: none;" class="leaflet-container leaflet-fade-anim leaflet-grab leaflet-touch-drag" tabindex="0"><div class="leaflet-pane leaflet-map-pane" style="transform: translate3d(0px, 0px, 0px);">
+<script>
+	var devices = L.layerGroup();
+	
+    var BING_KEY = 'AuhiCJHlGzhg93IqUH_oCpl_-ZUrIE6SPftlyGYUvr9Amx5nzA-WqGcPquyFZl4L';    
+    
+	var mbUrl = 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw';
+	
+	var mbAttrib = 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+			'<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+			'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>';
+
+	var osmLayer = L.tileLayer(mbUrl, {
+		maxZoom: 18,
+		attribution: mbAttrib,
+		id: 'mapbox/streets-v11',
+		tileSize: 512,
+		zoomOffset: -1
+	});
+	var hortoLayer = L.tileLayer(mbUrl, {
+		maxZoom: 18,
+		attribution: mbAttrib,
+		id: 'mapbox/satellite-v9',
+		tileSize: 512,
+		zoomOffset: -1
+	});
+
+    var bingLayer = L.tileLayer.bing(BING_KEY);  
+
+	var mymap = L.map('mapid', {
+		center: [41.899466, 12.498032],
+		zoom: 17,
+		layers: [osmLayer, hortoLayer]
+	});
+
+	var baseLayers = {
+		"OpenStreetMap": osmLayer,
+		"Hortophoto": hortoLayer,
+        "Bing": bingLayer
+	};
+
+	var overlays = {
+		"Sensor devices": devices
+	};
+
+	L.control.layers(baseLayers, overlays).addTo(mymap);
+	L.marker([41.899466, 12.498032]).bindPopup('CAR-AUDIRE fixed installation at terrace.').addTo(devices);    
+
+function onMapClick(e) {
+    popup
+        .setLatLng(e.latlng)
+        .setContent("You clicked the map at " + e.latlng.toString() + getMetaData(41.899466, 12.498032))
+        .openOn(mymap);
+}
+
+mymap.on('click', onMapClick);
+
+</script>
+</body>
+</html>
+
