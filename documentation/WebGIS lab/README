@@ -1,0 +1,9 @@
+In this folder you find support on setting up a basic but working mapping environment 
+based on Windows, running MapServer mapping engine, with Apache at the frontend and PostgreSQL/PostGIS at the backend.
+
+Please read instruction file "Web GIS lab.docs": this file will drive you through the entire setup process.
+Provided you have (any) working Windows ennvironment available (virtual machines welcome),
+you will first install the database, then the MS4W package that includes MapServer and Apache already configured.
+
+The environment comes with OpenLayers already embedded and functional, you may want to experiment with Leaflet instead
+(sample file are provided) see "TO DO.docs" file.
